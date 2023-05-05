@@ -1,6 +1,195 @@
 <html>
-    <head></head>
-    <body>
-        test
-    </body>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=0"
+    />
+
+    <style>
+      body,
+      input,
+      button {
+        font-size: 1rem;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        background: #eee;
+        height: 100%;
+        font-size: 1.25rem;
+      }
+      main {
+        padding: 0.25rem;
+        flex: 1;
+        overflow-y: scroll;
+        background: white;
+      }
+      .row,
+      header {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 0.25rem;
+      }
+      header {
+        padding: 0.25rem;
+      }
+      header span {
+        padding: 0.25rem;
+        flex: 1;
+        width: 0;
+      }
+      footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.25rem;
+      }
+      .row {
+        border-bottom: 1px solid #ccc;
+      }
+      input {
+        padding: 0.25rem;
+        flex: 1;
+        width: 0;
+      }
+      button {
+        background: transparent;
+        padding: 1rem;
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <span>Name</span>
+      <span>quantity</span>
+      <span>price</span>
+    </header>
+    <main class="table"></main>
+    <footer class="summary">
+      <span class="total"></span> <button class="row-add">Add ➕</button>
+    </footer>
+    <script>
+      let uid = 0;
+      const items = new Map();
+
+      function updateTotal() {
+        const total = Array.from(items.values()).reduce((total, item) => {
+          return item.total + total;
+        }, 0);
+
+        document.querySelector(".total").textContent = `Total: $${total.toFixed(
+          2
+        )}`;
+      }
+
+      function onAdd() {
+        const data = {
+          id: uid++,
+          quantity: 0,
+          price: 0,
+          total: 0,
+        };
+
+        const row = document.createElement("div");
+
+        const name = document.createElement("input");
+
+        const quantity = document.createElement("input");
+        quantity.value = data.quantity;
+        quantity.min = 0;
+        quantity.step = 1;
+        quantity.type = "number";
+
+        const price = document.createElement("input");
+        price.value = data.price;
+        price.min = 0;
+        price.step = 0.1;
+        price.type = "number";
+
+        const total = document.createElement("div");
+        const remove = document.createElement("button");
+
+        remove.textContent = "❌";
+        total.textContent = "1";
+
+        row.classList.add("row");
+
+        quantity.addEventListener("change", (e) => {
+          const value = Number.parseInt(e.currentTarget.value);
+          if (!Number.isNaN(value)) {
+            data.quantity = value;
+            updateItemTotal();
+          }
+        });
+
+        price.addEventListener("change", (e) => {
+          const value = Number.parseFloat(e.currentTarget.value);
+          if (!Number.isNaN(value)) {
+            data.price = value;
+            updateItemTotal();
+          }
+        });
+
+        remove.addEventListener("click", (e) => {
+          items.delete(data.id);
+          row.remove();
+
+          updateTotal();
+        });
+
+        function updateItemTotal() {
+          data.total = data.price * data.quantity;
+          total.textContent = `$${data.total.toFixed(2)}`;
+
+          updateTotal();
+        }
+
+        row.append(name);
+        row.append(quantity);
+        row.append(price);
+        row.append(total);
+        row.append(remove);
+
+        document.querySelector(".table").append(row);
+
+        items.set(data.id, data);
+
+        updateItemTotal();
+      }
+
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      onAdd();
+      document.querySelector(".row-add").addEventListener("click", () => {
+        onAdd();
+      });
+    </script>
+  </body>
 </html>

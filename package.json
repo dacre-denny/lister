@@ -1,0 +1,11 @@
+{
+  "name": "lister",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:dacre-denny/lister.git",
+  "author": "Dacre <dacre@mooce.co.nz>",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
